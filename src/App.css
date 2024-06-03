@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-/* Board */
+/** Board */
 .board {
   border: 2px solid darkorange;
   max-width: 900px;
@@ -29,4 +29,12 @@
   min-width: 100px;
   min-height: 100px;
   border: 1px solid red;
+}
+
+/** Results */
+.results {
+  min-width: 200px;
+  min-height: 200px;
+  border: 2px solid yellow;
+  
 }

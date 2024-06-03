@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { checkWinner } from '../utilities/checkWinner'
 
 type MarkBoxProps = {
   gameBoard: (string | null)[]
   setGameBoard: React.Dispatch<React.SetStateAction<(string | null)[]>>,
   id: number,
   currentPlayer: string,
-  setCurrentPlayer: React.Dispatch<React.SetStateAction<string>>
+  setCurrentPlayer: React.Dispatch<React.SetStateAction<string>>,
+  winner: string,
+  setWinner: React.Dispatch<React.SetStateAction<string>>
 }
 
 
-const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPlayer, setCurrentPlayer}) => {
+const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPlayer, setCurrentPlayer, winner, setWinner}) => {
   const [mark, setMark] = useState<string>('')
+
+  useEffect(() => {
+    setWinner(checkWinner(gameBoard))
+    {gameBoard.every((value) => value === null) && setMark('')}
+    console.log('rendered')
+  }, [gameBoard, setWinner])
+
+
 
   const switchPlayer = (currentPlayer: string): void => {
     if (currentPlayer === 'p1') {
@@ -21,6 +32,7 @@ const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPl
   }
 
   const handlePlayerMark = (currentPlayer: string, mark: string) => {
+    if (winner) return
     if (!mark) {
       setMark(currentPlayer)
       const updatedGameBoard: (string | null)[] = [...gameBoard]
@@ -31,7 +43,6 @@ const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPl
       return null
     }
   }
-
 
   return (
     <div className='markbox' onClick={() => handlePlayerMark(currentPlayer, mark)}>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Board from './components/Board'
 import './App.css'
+import ResultsCard from './components/ResultsCard'
 
 // type Player = {
 //   playerType: string
@@ -11,6 +12,7 @@ import './App.css'
 function App() {
   const [winner, setWinner] = useState<string>('')
   const [currentPlayer, setCurrentPlayer] = useState<string>('')
+  const [gameBoard, setGameBoard] = useState<(string | null)[]>(Array(9).fill(null))
 
   const determineFirstTurn = (numberOfPlayers: number): void => {
     const randomTurn = Math.floor(Math.random() * numberOfPlayers)
@@ -22,11 +24,12 @@ function App() {
     <>
       {!currentPlayer ? determineFirstTurn(2) : null}
       {console.log(currentPlayer)}
-      {/* <ResultsCard/> */}
+      {console.log(gameBoard)}
       {/* <PlayerCard/> */}
-      <Board setWinner={setWinner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer}/>
+      <Board gameBoard={gameBoard} setGameBoard={setGameBoard} winner={winner} setWinner={setWinner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer}/>
       {/* <PlayerCard/> */}
       {winner && console.log(`The Winner is ${winner}`)}
+      <ResultsCard winner={winner} setWinner={setWinner} setGameBoard={setGameBoard} />
     </>
   )
 }
