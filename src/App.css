@@ -2,13 +2,29 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/** App */
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid blue;
+  margin: 0 auto;
+  height: 99vh;
+  position: relative;
+}
+
 /** Board */
 .board {
   border: 2px solid darkorange;
-  max-width: 900px;
-  max-height: 900px;
-  min-height: 320px;
-  min-width: 320px;
+  aspect-ratio: 1/1;
+  width: 40%;
+  max-width: 830px;
+  min-width: 304px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,15 +42,22 @@
 }
 
 .markbox {
-  min-width: 100px;
-  min-height: 100px;
+  width: 33%;
+  height: 100%;
   border: 1px solid red;
 }
 
 /** Results */
 .results {
+  width: 20%;
   min-width: 200px;
-  min-height: 200px;
-  border: 2px solid yellow;
-  
+  aspect-ratio: 1/1;
+  position: fixed;
+  background-color: aquamarine;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 }

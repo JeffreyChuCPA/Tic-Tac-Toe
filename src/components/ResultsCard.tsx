@@ -3,10 +3,11 @@ import React from "react";
 type ResultsCardProps = {
   winner: string,
   setWinner: React.Dispatch<React.SetStateAction<string>>,
+  allMarked: boolean,
   setGameBoard: React.Dispatch<React.SetStateAction<(string | null)[]>>
 };
 
-const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, setGameBoard }) => {
+const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, allMarked, setGameBoard }) => {
 
   const handlePlayAgain = (): void => {
     setWinner('');
@@ -18,11 +19,18 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, setGameBoa
     <>
       {winner && 
         <div className="results">
-          {`Winner is ${winner}!`}
+          <span className="results-text">{`Winner is ${winner}!`}</span>
           <button className="results-btn" onClick={() => handlePlayAgain()}>
             Play Again
           </button>
-          </div>}
+        </div>}
+      {!winner && allMarked ? 
+        <div className="results">
+          <span className="results-text">{`It's a tie!`}</span>
+          <button className="results-btn" onClick={() => handlePlayAgain()}>
+            Play Again
+          </button>
+        </div> : null}
     </>
   )
 };
