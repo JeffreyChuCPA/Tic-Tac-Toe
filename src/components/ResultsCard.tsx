@@ -1,25 +1,26 @@
 import React from "react";
+import { Player } from "../utilities/types";
 
 type ResultsCardProps = {
-  winner: string,
-  setWinner: React.Dispatch<React.SetStateAction<string>>,
+  winner: Player | null ,
+  setWinner: React.Dispatch<React.SetStateAction<Player | null >>,
   allMarked: boolean,
-  setGameBoard: React.Dispatch<React.SetStateAction<(string | null)[]>>
+  setGameBoard: React.Dispatch<React.SetStateAction<(Player | null)[]>>
 };
 
 const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, allMarked, setGameBoard }) => {
 
   const handlePlayAgain = (): void => {
-    setWinner('');
-    const newBoard: (string | null)[] = Array(9).fill(null)
+    setWinner(null);
+    const newBoard: (Player | null)[] = Array(9).fill(null)
     setGameBoard(newBoard)
   } 
 
   return (
     <>
-      {winner && 
+      {winner?.playerType && 
         <div className="results">
-          <span className="results-text">{`Winner is ${winner}!`}</span>
+          <span className="results-text">{`Winner is ${winner.playerType}!`}</span>
           <button className="results-btn" onClick={() => handlePlayAgain()}>
             Play Again
           </button>

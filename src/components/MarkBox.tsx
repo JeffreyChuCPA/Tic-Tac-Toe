@@ -1,41 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { checkWinner } from '../utilities/checkWinner'
+import { Player } from '../utilities/types';
 
 type MarkBoxProps = {
-  gameBoard: (string | null)[]
-  setGameBoard: React.Dispatch<React.SetStateAction<(string | null)[]>>,
+  gameBoard: (Player | null)[]
+  setGameBoard: React.Dispatch<React.SetStateAction<(Player | null)[]>>,
   id: number,
-  currentPlayer: string,
-  setCurrentPlayer: React.Dispatch<React.SetStateAction<string>>,
-  winner: string,
-  setWinner: React.Dispatch<React.SetStateAction<string>>
+  currentPlayer:Player | null,
+  setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>,
+  winner: Player | null | undefined,
+  players: Player[]
 }
 
 
-const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPlayer, setCurrentPlayer, winner, setWinner}) => {
-  const [mark, setMark] = useState<string>('')
+const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPlayer, setCurrentPlayer, winner, players}) => {
+  const [mark, setMark] = useState<Player | null>(null)
 
   useEffect(() => {
-    setWinner(checkWinner(gameBoard))
-    {gameBoard.every((value) => value === null) && setMark('')}
-    console.log('rendered')
-  }, [gameBoard, setWinner])
+    {gameBoard.every((value) => value === null) && setMark(null)}
+  },[gameBoard])
 
-
-
-  const switchPlayer = (currentPlayer: string): void => {
-    if (currentPlayer === 'p1') {
-      setCurrentPlayer('p2')
+  const switchPlayer = (currentPlayer: Player | null): void => {
+    if (currentPlayer === players[0]) {
+      setCurrentPlayer(players[1])
     } else {
-      setCurrentPlayer('p1')
+      setCurrentPlayer(players[0])
     }
   }
 
-  const handlePlayerMark = (currentPlayer: string, mark: string) => {
+  const handlePlayerMark = (currentPlayer: Player | null, mark: Player | null) => {
     if (winner) return
     if (!mark) {
       setMark(currentPlayer)
-      const updatedGameBoard: (string | null)[] = [...gameBoard]
+      const updatedGameBoard: (Player | null)[] = [...gameBoard]
       updatedGameBoard[id] = currentPlayer
       setGameBoard(updatedGameBoard)
       switchPlayer(currentPlayer)
@@ -46,8 +42,8 @@ const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPl
 
   return (
     <div className='markbox' onClick={() => handlePlayerMark(currentPlayer, mark)}>
-      {mark === 'p1' && (<div className='mark-p1'>P1</div>)}
-      {mark === 'p2' && (<div className='mark-p2'>P2</div>)}
+      {mark === players[0] && (<div className='mark-p1'>{players[0].playerType}</div>)}
+      {mark === players[1] && (<div className='mark-p2'>{players[1].playerType}</div>)}
     </div>
   )
 }
