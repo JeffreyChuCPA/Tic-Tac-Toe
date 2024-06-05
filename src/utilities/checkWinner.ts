@@ -12,13 +12,16 @@ const winningCombos: WinningCombos = {
   cross: [[0, 4, 8], [2, 4, 6]]
 }
 
-export const checkWinner = (gameBoard: (Player | null)[], players: Player[]): Player | null => {
+export const checkWinner = (gameBoard: (Player | null)[], players: Player[], setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>): Player | null => {
   for (const section in winningCombos) {
     const winningConditions = winningCombos[section as keyof WinningCombos]
     for (const winningCondition of winningConditions) {
       if (winningCondition.every((value) => gameBoard[value] === players[0])) {
+        setCurrentPlayer(null)
         return players[0]
+        
       } else if (winningCondition.every((value) => gameBoard[value] === players[1])) {
+        setCurrentPlayer(null)
         return players[1]
       } 
     }

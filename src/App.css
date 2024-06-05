@@ -28,7 +28,7 @@
   background-position: center;
   box-sizing: border-box;
   color: white;
-  animation: gradientAnimation 2s infinite ease-in-out;
+  /* animation: gradientAnimation 2s infinite ease-in-out; */
   background-size: 100% 100%
 }
 
@@ -148,6 +148,9 @@ body {
 .mark-cross-img {
   width: 97%
 }
+.mark-cross-img.hovered {
+  opacity: 0.5;
+}
 .mark-cross {
   display: flex;
   justify-content: center;
@@ -156,6 +159,9 @@ body {
 }
 .mark-circle-img {
   width: 68%;
+}
+.mark-circle-img.hovered{
+  opacity: 0.5;
 }
 .mark-circle {
   display: flex;
@@ -246,4 +252,30 @@ body {
   margin: 50px;
   padding: 20px;
   font-size: clamp(1.2rem, 2vw, 2.5rem);
+  transition: 0.5s ease-in;
+}
+
+.player-card.current {
+  scale: 1.2;
+  transition: 0.5s ease-in;
+  animation: rotate 2s infinite ease-in-out;
+}
+.player-title, .score {
+  transform: rotate(0deg);
+  animation: counter-rotate 2s infinite ease-in-out;
+}
+
+@keyframes rotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(20deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
 }

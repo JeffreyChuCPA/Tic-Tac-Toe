@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     gameBoard.every((cell) => cell !== null) ? setAllMarked(true) : setAllMarked(false)
-    setWinner(checkWinner(gameBoard, players))
+    setWinner(checkWinner(gameBoard, players, setCurrentPlayer))
   }, [gameBoard])
 
   return (
@@ -27,10 +27,10 @@ function App() {
       {console.log(gameBoard)}
       {players[1].playerType === null ? <SelectPlayers players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer}/> :
         <div className='app'>
-          <PlayerCard winner={winner} selectedPlayer={players[0]}/>
+          <PlayerCard winner={winner} selectedPlayer={players[0]} currentPlayer={currentPlayer}/>
           <Board players={players} gameBoard={gameBoard} setGameBoard={setGameBoard} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer}/>
-          <PlayerCard winner={winner} selectedPlayer={players[1]}/>
-          <ResultsCard winner={winner} setWinner={setWinner} allMarked={allMarked} setGameBoard={setGameBoard} />
+          <PlayerCard winner={winner} selectedPlayer={players[1]} currentPlayer={currentPlayer}/>
+          <ResultsCard players={players} setCurrentPlayer={setCurrentPlayer} winner={winner} setWinner={setWinner} allMarked={allMarked} setGameBoard={setGameBoard} />
         </div>}
     </>
   )

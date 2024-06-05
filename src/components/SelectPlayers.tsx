@@ -1,5 +1,6 @@
 import React from 'react'
 import { Player } from '../utilities/types'
+import { determineFirstTurn } from '../utilities/determineFirstTurn'
 
 type SelectPlayersProps = {
   players: Player[],
@@ -9,17 +10,11 @@ type SelectPlayersProps = {
 
 const SelectPlayers: React.FC<SelectPlayersProps> = ({players, setPlayers, setCurrentPlayer}) => {
 
-  const determineFirstTurn = (numberOfPlayers: number, players: Player[]): void => {
-    const randomTurn: number = Math.floor(Math.random() * numberOfPlayers)
-    const firstTurn: Player = randomTurn ? players[0] : players[1]
-    return setCurrentPlayer(firstTurn)
-  }
-
   const handlePlayerSelection = (opponent: "P2" | "Computer") => {
     const updatedPlayers = [...players]
     updatedPlayers[1].playerType = opponent
     setPlayers(updatedPlayers)
-    determineFirstTurn(2, players)
+    determineFirstTurn(2, players, setCurrentPlayer)
   }
 
   return (

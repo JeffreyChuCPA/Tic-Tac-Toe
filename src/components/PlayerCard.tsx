@@ -4,9 +4,10 @@ import { Player } from "../utilities/types";
 type PlayerCardProps = {
   winner: Player | null;
   selectedPlayer: Player | null;
+  currentPlayer: Player | null;
 };
 
-const PlayerCard: React.FC<PlayerCardProps> = ({winner, selectedPlayer}) => {
+const PlayerCard: React.FC<PlayerCardProps> = ({winner, selectedPlayer, currentPlayer}) => {
   const [winCount, setWinCount] = useState<number>(0)
 
   useEffect(() => {
@@ -16,7 +17,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({winner, selectedPlayer}) => {
   }, [winner]);
 
   return (
-    <div className="player-card">
+    <div className={selectedPlayer === currentPlayer ? "player-card current" : "player-card"}>
       <div className="player-title">{selectedPlayer?.playerType}</div>
       <div className="score">{winCount}</div>
     </div>
