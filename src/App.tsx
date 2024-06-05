@@ -13,7 +13,7 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null)
   const [gameBoard, setGameBoard] = useState<(Player | null)[]>(Array(9).fill(null))
   const [allMarked, setAllMarked] = useState<boolean>(false)
-  const [players, setPlayers] = useState<Player[]>([{playerType: "P1", score: 0}, {playerType: null, score: 0}])
+  const [players, setPlayers] = useState<Player[]>([{playerType: "P1"}, {playerType: null}])
 
   useEffect(() => {
     gameBoard.every((cell) => cell !== null) ? setAllMarked(true) : setAllMarked(false)
@@ -25,14 +25,13 @@ function App() {
       {console.log(currentPlayer)}
       {console.log(players)}
       {console.log(gameBoard)}
-      {players[1].playerType === null ? <SelectPlayers players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer}/> : null}
-      {players[1].playerType !== null ?  
+      {players[1].playerType === null ? <SelectPlayers players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer}/> :
         <div className='app'>
-          <PlayerCard winner={winner}/>
+          <PlayerCard winner={winner} selectedPlayer={players[0]}/>
           <Board players={players} gameBoard={gameBoard} setGameBoard={setGameBoard} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer}/>
-          <PlayerCard winner={winner}/>
+          <PlayerCard winner={winner} selectedPlayer={players[1]}/>
           <ResultsCard winner={winner} setWinner={setWinner} allMarked={allMarked} setGameBoard={setGameBoard} />
-        </div> : null}
+        </div>}
     </>
   )
 }

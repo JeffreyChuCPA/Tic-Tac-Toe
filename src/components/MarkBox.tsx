@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Player } from '../utilities/types';
+import cross from '../assets/cross.png'
+import circle from '../assets/circle.png'
 
 type MarkBoxProps = {
   gameBoard: (Player | null)[]
@@ -41,9 +43,9 @@ const MarkBox: React.FC<MarkBoxProps> = ({gameBoard, setGameBoard, id, currentPl
   }
 
   return (
-    <div className='markbox' onClick={() => handlePlayerMark(currentPlayer, mark)}>
-      {mark === players[0] && (<div className='mark-p1'>{players[0].playerType}</div>)}
-      {mark === players[1] && (<div className='mark-p2'>{players[1].playerType}</div>)}
+    <div className='markbox' id={id.toString()} onClick={() => handlePlayerMark(currentPlayer, mark)}>
+      {mark === players[0] && (<div className='mark-cross'><img className='mark-cross-img' src={cross}/></div>)}
+      {mark === players[1] && (<div className='mark-circle'><img className='mark-circle-img'  src={circle}/></div>)}
     </div>
   )
 }

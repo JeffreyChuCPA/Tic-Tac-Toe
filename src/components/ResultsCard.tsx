@@ -19,7 +19,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, allMarked,
   return (
     <>
       {winner?.playerType && 
-        <div className="results">
+        <div className="results-card">
           <span className="results-text">{`Winner is ${winner.playerType}!`}</span>
           <button className="results-btn" onClick={() => handlePlayAgain()}>
             Play Again

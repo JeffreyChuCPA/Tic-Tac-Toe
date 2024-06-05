@@ -1,8 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans&display=swap");
+
 :root {
+  --deg1-start: 217deg;
+  --deg2-start: 127deg;
+  --deg3-start: 336deg;
+  --gradient1: linear-gradient(
+    var(--deg1-start),
+    rgba(247, 98, 121, 0.8),
+    rgba(250, 35, 71, 0) 70.71%
+  );
+  --gradient2: linear-gradient(
+    var(--deg2-start),
+    rgba(117, 241, 117, 0.8),
+    rgba(144, 238, 144, 0) 70.71%
+  );
+  --gradient3: linear-gradient(
+    var(--deg3-start),
+    rgba(52, 176, 218, 0.8),
+    rgba(173, 216, 230, 0) 70.71%
+  );
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.5;
+  font-weight: 900;
+  background-image: var(--gradient1), var(--gradient2), var(--gradient3);
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+  color: white;
+  animation: gradientAnimation 2s infinite ease-in-out;
+  background-size: 100% 100%
 }
 
-html, body {
+@keyframes gradientAnimation {
+  0%, 100% {
+    --deg1-start: 217deg;
+    --deg2-start: 127deg;
+    --deg3-start: 336deg;
+  }
+  1.111% {
+    --deg1-start: calc(217deg + (360deg * 1.111));
+    --deg2-start: calc(127deg + (360deg * 1.111));
+    --deg3-start: calc(336deg + (360deg * 1.111));
+  }
+  2.222% {
+    --deg1-start: calc(217deg + (360deg * 2.222));
+    --deg2-start: calc(127deg + (360deg * 2.222));
+    --deg3-start: calc(336deg + (360deg * 2.222));
+  }
+  /* Continue with increments up to 100% */
+  /* 90% */
+  90% {
+    --deg1-start: calc(217deg + (360deg * 90));
+    --deg2-start: calc(127deg + (360deg * 90));
+    --deg3-start: calc(336deg + (360deg * 90));
+  }
+  /* 91.111% */
+  91.111% {
+    --deg1-start: calc(217deg + (360deg * 91.111));
+    --deg2-start: calc(127deg + (360deg * 91.111));
+    --deg3-start: calc(336deg + (360deg * 91.111));
+  }
+  /* 92.222% */
+  92.222% {
+    --deg1-start: calc(217deg + (360deg * 92.222));
+    --deg2-start: calc(127deg + (360deg * 92.222));
+    --deg3-start: calc(336deg + (360deg * 92.222));
+  }
+  /* Continue with increments up to 100% */
+  /* 100% */
+  100% {
+    --deg1-start: 217deg;
+    --deg2-start: 127deg;
+    --deg3-start: 336deg;
+  }
+}
+
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -12,7 +87,6 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid blue;
   margin: 0 auto;
   height: 99vh;
   position: relative;
@@ -20,7 +94,8 @@ html, body {
 
 /** Board */
 .board {
-  border: 2px solid darkorange;
+  border: 10px solid white;
+  border-radius: 20%;
   aspect-ratio: 1/1;
   width: 40%;
   max-width: 830px;
@@ -33,9 +108,8 @@ html, body {
 }
 
 .row {
-  border: 2px solid green;
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   align-items: center;
   height: 300px;
   width: 100%;
@@ -44,20 +118,132 @@ html, body {
 .markbox {
   width: 33%;
   height: 100%;
-  border: 1px solid red;
+  border: 5px solid white;
 }
 
+[id="0"].markbox {
+  border-left: none;
+}
+
+[id="3"].markbox {
+  border-left: none;
+}
+
+[id="6"].markbox {
+  border-left: none;
+}
+
+[id="2"].markbox {
+  border-right: none;
+}
+
+[id="5"].markbox {
+  border-right: none;
+}
+
+[id="8"].markbox {
+  border-right: none;
+}
+
+.mark-cross-img {
+  width: 97%
+}
+.mark-cross {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.mark-circle-img {
+  width: 68%;
+}
+.mark-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/** Player-Selection */
+.player-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(200px, 30%, 400px);
+  aspect-ratio: 1/1;
+  flex-direction: column;
+  gap: 10px;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 10px solid white;
+  border-radius: 20%;
+  font-size: clamp(1.2rem, 2vw, 2.5rem);
+}
+
+.player-selection-btn {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1rem, 1vw, 1.5rem);
+  font-weight: 500;
+  background-color: white;
+  color: black;
+  border: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+}
+.player-selection-btn:hover {
+  background-color: rgb(68, 68, 68);
+  color: white;
+}
+
+
 /** Results */
-.results {
-  width: 20%;
-  min-width: 200px;
+.results-card {
+  width: clamp(200px, 30%, 400px);
   aspect-ratio: 1/1;
   position: fixed;
-  background-color: aquamarine;
+  background-color: red;
   z-index: 5;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  border: 10px solid white;
+  border-radius: 20%;
+  font-size: clamp(1.2rem, 2vw, 2.5rem);
+}
+.results-btn {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1rem, 1vw, 1.5rem);
+  font-weight: 500;
+  background-color: white;
+  color: black;
+  border: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+}
+.results-btn:hover {
+  background-color: rgb(68, 68, 68);
+  color: white;
+}
+
+/** PlayerCard */
+.player-card {
+  width: clamp(100px, 10%, 200px);
+  min-width: 100px;
+  aspect-ratio: 1/1;
+  border: 10px solid white;
+  border-radius: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 50px;
+  padding: 20px;
+  font-size: clamp(1.2rem, 2vw, 2.5rem);
 }
