@@ -151,6 +151,18 @@ body {
 .mark-cross-img.hovered {
   opacity: 0.5;
 }
+.mark-cross-img.cross-animation {
+  animation: cross-rotate 1s cubic-bezier(0.61, 1, 0.88, 1);
+}
+@keyframes cross-rotate {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 720deg
+  }
+}
+
 .mark-cross {
   display: flex;
   justify-content: center;
@@ -162,6 +174,51 @@ body {
 }
 .mark-circle-img.hovered{
   opacity: 0.5;
+}
+.mark-circle-img.circle-animation {
+  animation: circle-jump 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes circle-jump {
+  0% {
+		transform: translateY(-100%); 
+	}
+
+	12% {
+		transform: translateY(-89.11%);
+	}
+
+	24% {
+		transform: translateY(-56.44%);
+	}
+
+	36% {
+		transform: translateY(-1.99%);
+	}
+
+	54% {
+		transform: translateY(-24.98%);
+	}
+
+	74% {
+		transform: translateY(-1.63%);
+	}
+
+	82% {
+		transform: translateY(-6.25%);
+	}
+
+	92% {
+		transform: translateY(-0.66%);
+	}
+
+	96% {
+		transform: translateY(-1.54%);
+	}
+
+	100% {
+		transform: translateY(0%);
+	}
+
 }
 .mark-circle {
   display: flex;
@@ -194,7 +251,7 @@ body {
   font-size: clamp(1rem, 1vw, 1.5rem);
   font-weight: 500;
   background-color: white;
-  color: black;
+  color: rgb(68, 68, 68);
   border: white;
   border-radius: 15px;
   padding: 10px 20px;
@@ -211,7 +268,6 @@ body {
   width: clamp(200px, 30%, 400px);
   aspect-ratio: 1/1;
   position: fixed;
-  background-color: red;
   z-index: 5;
   display: flex;
   justify-content: center;
@@ -221,13 +277,29 @@ body {
   border: 10px solid white;
   border-radius: 20%;
   font-size: clamp(1.2rem, 2vw, 2.5rem);
+  background-image: linear-gradient(
+    var(--deg1-start),
+    rgba(247, 98, 121, 0.8),
+    rgba(250, 35, 71, 0) 50%
+  ), linear-gradient(
+    var(--deg2-start),
+    rgba(117, 241, 117, 1),
+    rgba(144, 238, 144, 0) 70.71%
+  ), linear-gradient(
+    var(--deg3-start),
+    rgba(52, 176, 218, 1),
+    rgba(173, 216, 230, 1) 50%
+  );
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
 }
 .results-btn {
   font-family: "Montserrat", sans-serif;
   font-size: clamp(1rem, 1vw, 1.5rem);
   font-weight: 500;
   background-color: white;
-  color: black;
+  color: rgb(68, 68, 68);
   border: white;
   border-radius: 15px;
   padding: 10px 20px;
@@ -236,6 +308,7 @@ body {
 .results-btn:hover {
   background-color: rgb(68, 68, 68);
   color: white;
+  border: white;
 }
 
 /** PlayerCard */
@@ -277,5 +350,135 @@ body {
   }
   75% {
     transform: rotate(-20deg);
+  }
+}
+
+/** GameDataCard */
+
+.game-data-card {
+  border: 10px solid white;
+  border-radius: 20%;
+  padding: 20px;
+  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  width: clamp(100px, 10%, 200px);
+  min-width: 100px;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.game-data {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 830px) {
+  .game-data-card {
+    width: clamp(32%, 30%, 40%);
+    max-width: 800px;
+    /* min-width: 304px; */
+    height: 10%;
+    border-radius: 30px;
+    position: absolute;
+    top: 92%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .player-card {
+    margin: 60px;
+  }
+}
+
+@media screen and (max-width: 829px) {
+  .app {
+    display: grid;
+    grid-template-rows: 60% 20%;
+    gap: 10px;
+    grid-template-areas: 
+      "board board board"
+      "player1 data player2";
+    grid-template-columns: 1fr auto 1fr;
+  }
+  .board {
+    grid-area: board;
+    width: 80%;
+    justify-self: center;
+  }
+  [id='0'].player-card {
+    grid-area: player1;
+    justify-self: center;
+  }
+  [id='1'].player-card {
+    grid-area: player2;
+    justify-self: center;
+  }
+  .game-data-card {
+    grid-area: data;
+    justify-self: center;
+  }
+  .results-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(130px, 50vw, 350px)
+  }
+}
+
+@media screen and (max-width: 685px) {
+  .app {
+    grid-template-rows: 60% 20% 20%;
+    grid-template-areas: 
+      "board board board"
+      "player1 . player2"
+      "data data data";
+  }
+  .board {
+    grid-area: board;
+    width: 80%;
+  }
+  [id='0'].player-card {
+    grid-area: player1;
+    justify-self: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  [id='1'].player-card {
+    grid-area: player2;
+    justify-self: center;
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+  .game-data-card {
+    grid-area: data;
+    justify-self: center;
+    width: 75%;
+    height: 20%;
+    border-radius: 30px;
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .app {
+    grid-template-rows: 40% 16% 16% 20%;
+    grid-template-columns: 100%;
+    grid-template-areas: 
+      "board"
+      "player1"
+      "player2"
+      "data";
+  }
+  [id='0'].player-card {
+    grid-area: player1;
+    justify-self: center;
+
+  }
+  [id='1'].player-card {
+    grid-area: player2;
+    justify-self: center;
   }
 }

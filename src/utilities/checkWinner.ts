@@ -23,7 +23,7 @@ export const checkWinner = (gameBoard: (Player | null)[], players: Player[], set
       } else if (winningCondition.every((value) => gameBoard[value] === players[1])) {
         setCurrentPlayer(null)
         return players[1]
-      } 
+      }
     }
   }
   return null

@@ -76,8 +76,8 @@ const MarkBox: React.FC<MarkBoxProps> = ({
       onClick={() => handlePlayerMark(currentPlayer, mark)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
-        {mark === players[0] && <div className="mark-cross"><img className="mark-cross-img" src={cross} /></div>}
-        {mark === players[1] && <div className="mark-circle"><img className="mark-circle-img" src={circle} /></div>}
+        {mark === players[0] && <div className="mark-cross"><img className="mark-cross-img cross-animation" src={cross} /></div>}
+        {mark === players[1] && <div className="mark-circle"><img className="mark-circle-img circle-animation" src={circle} /></div>}
         {isHovered && !mark ? (
           <>
             {currentPlayer === players[0] && <div className="mark-cross"><img className="mark-cross-img hovered" src={cross} /></div>}
