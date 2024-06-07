@@ -6,15 +6,17 @@ type ResultsCardProps = {
   winner: Player | null ,
   setWinner: React.Dispatch<React.SetStateAction<Player | null >>,
   allMarked: boolean,
+  setAllMarked: (value: React.SetStateAction<boolean>) => void,
   setGameBoard: React.Dispatch<React.SetStateAction<(Player | null)[]>>,
   players: Player[],
   setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>
 };
 
-const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, allMarked, setGameBoard, players, setCurrentPlayer }) => {
+const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, allMarked, setAllMarked, setGameBoard, players, setCurrentPlayer }) => {
 
   const handlePlayAgain = (): void => {
     setWinner(null);
+    setAllMarked(false)
     const newBoard: (Player | null)[] = Array(9).fill(null)
     setGameBoard(newBoard)
     determineFirstTurn(2, players, setCurrentPlayer)

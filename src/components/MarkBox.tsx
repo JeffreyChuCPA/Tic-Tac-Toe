@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Player } from "../utilities/types";
 import cross from "../assets/cross.png";
 import circle from "../assets/circle.png";
+import { checkWinner } from "../utilities/checkWinner";
 
 type MarkBoxProps = {
   gameBoard: (Player | null)[];
@@ -11,6 +12,7 @@ type MarkBoxProps = {
   setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   winner: Player | null | undefined;
   players: Player[];
+  computerMark: number | null
 };
 
 const MarkBox: React.FC<MarkBoxProps> = ({
@@ -20,7 +22,8 @@ const MarkBox: React.FC<MarkBoxProps> = ({
   currentPlayer,
   setCurrentPlayer,
   winner,
-  players
+  players,
+  computerMark
 }) => {
   const [mark, setMark] = useState<Player | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -30,6 +33,16 @@ const MarkBox: React.FC<MarkBoxProps> = ({
       gameBoard.every((value) => value === null) && setMark(null);
     }
   }, [gameBoard]);
+
+  useEffect(() => {
+    if (currentPlayer?.playerType === "Computer" && id === computerMark) {
+      setMark(currentPlayer);
+      const updatedGameBoard: (Player | null)[] = [...gameBoard];
+      updatedGameBoard[id] = currentPlayer;
+      setGameBoard(updatedGameBoard);
+      switchPlayer(currentPlayer);
+    }
+  }, [currentPlayer])
 
   const switchPlayer = (currentPlayer: Player | null): void => {
     if (currentPlayer === players[0]) {
@@ -52,8 +65,8 @@ const MarkBox: React.FC<MarkBoxProps> = ({
       const updatedGameBoard: (Player | null)[] = [...gameBoard];
       updatedGameBoard[id] = currentPlayer;
       setGameBoard(updatedGameBoard);
-      switchPlayer(currentPlayer);
       setIsHovered(false)
+      switchPlayer(currentPlayer);
     } else {
       return null;
     }
@@ -61,12 +74,10 @@ const MarkBox: React.FC<MarkBoxProps> = ({
 
   const handleMouseEnter = (): void => {
     setIsHovered(true);
-    console.log('hovered');
   }
 
   const handleMouseLeave = (): void => {
     setIsHovered(false);
-    console.log('not hovered');
   };
 
   return (
@@ -81,7 +92,7 @@ const MarkBox: React.FC<MarkBoxProps> = ({
         {isHovered && !mark ? (
           <>
             {currentPlayer === players[0] && <div className="mark-cross"><img className="mark-cross-img hovered" src={cross} /></div>}
-            {currentPlayer === players[1] && <div className="mark-circle"><img className="mark-circle-img hovered" src={circle} /></div>}
+            {currentPlayer?.playerType === "P2" && <div className="mark-circle"><img className="mark-circle-img hovered" src={circle} /></div>}
           </>
         ) : null}
     </div>

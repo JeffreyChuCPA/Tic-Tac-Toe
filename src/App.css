@@ -267,7 +267,7 @@ body {
 .results-card {
   width: clamp(200px, 30%, 400px);
   aspect-ratio: 1/1;
-  position: fixed;
+  /* position: fixed; */
   z-index: 5;
   display: flex;
   justify-content: center;
@@ -309,6 +309,10 @@ body {
   background-color: rgb(68, 68, 68);
   color: white;
   border: white;
+}
+
+.results-text {
+  text-align: center;
 }
 
 /** PlayerCard */

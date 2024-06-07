@@ -24,19 +24,18 @@ function App() {
       setAllMarked(false)
     }
     setWinner(checkWinner(gameBoard, players, setCurrentPlayer))
-  }, [gameBoard])
+  }, [currentPlayer])
 
   return (
     <>
       {console.log(currentPlayer)}
-      {console.log(players)}
-      {console.log(gameBoard)}
+      {console.log(winner)}
       {players[1].playerType === null ? <SelectPlayers players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer}/> :
         <div className='app'>
           <PlayerCard id={'0'} winner={winner} selectedPlayer={players[0]} currentPlayer={currentPlayer}/>
           <Board players={players} gameBoard={gameBoard} setGameBoard={setGameBoard} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer}/>
           <PlayerCard id={'1'} winner={winner} selectedPlayer={players[1]} currentPlayer={currentPlayer}/>
-          <ResultsCard players={players} setCurrentPlayer={setCurrentPlayer} winner={winner} setWinner={setWinner} allMarked={allMarked} setGameBoard={setGameBoard} />
+          <ResultsCard players={players} setCurrentPlayer={setCurrentPlayer} winner={winner} setWinner={setWinner} allMarked={allMarked} setAllMarked={setAllMarked} setGameBoard={setGameBoard} />
           <GameDataCard winner={winner} allMarked={allMarked} />
         </div>}
     </>
