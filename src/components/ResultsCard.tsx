@@ -20,6 +20,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, allMarked,
     const newBoard: (Player | null)[] = Array(9).fill(null)
     setGameBoard(newBoard)
     determineFirstTurn(2, players, setCurrentPlayer)
+    console.log('clicked played again');
   } 
 
   return (

@@ -12,7 +12,8 @@ type MarkBoxProps = {
   setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   winner: Player | null | undefined;
   players: Player[];
-  computerMark: number | null
+  computerMark: number | null;
+  setWinner: React.Dispatch<React.SetStateAction<Player | null>>,
 };
 
 const MarkBox: React.FC<MarkBoxProps> = ({
@@ -23,7 +24,8 @@ const MarkBox: React.FC<MarkBoxProps> = ({
   setCurrentPlayer,
   winner,
   players,
-  computerMark
+  computerMark,
+  setWinner
 }) => {
   const [mark, setMark] = useState<Player | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -32,6 +34,7 @@ const MarkBox: React.FC<MarkBoxProps> = ({
     {
       gameBoard.every((value) => value === null) && setMark(null);
     }
+    // console.log('clear each mark useEffect rendered');
   }, [gameBoard]);
 
   useEffect(() => {
@@ -41,8 +44,10 @@ const MarkBox: React.FC<MarkBoxProps> = ({
       updatedGameBoard[id] = currentPlayer;
       setGameBoard(updatedGameBoard);
       switchPlayer(currentPlayer);
+      // console.log('XXXXXXXXXXXXXXXXXXXXXX');
     }
-  }, [currentPlayer])
+    // console.log('set mark for computer useEffect');
+  }, [gameBoard])
 
   const switchPlayer = (currentPlayer: Player | null): void => {
     if (currentPlayer === players[0]) {
@@ -60,14 +65,26 @@ const MarkBox: React.FC<MarkBoxProps> = ({
       setIsHovered(false)
       return
     }
-    if (!mark) {
+
+    const hasWinner = checkWinner(gameBoard, players, setCurrentPlayer)
+    if (!mark && !hasWinner) {
       setMark(currentPlayer);
       const updatedGameBoard: (Player | null)[] = [...gameBoard];
       updatedGameBoard[id] = currentPlayer;
       setGameBoard(updatedGameBoard);
       setIsHovered(false)
       switchPlayer(currentPlayer);
-    } else {
+      console.log('clicked');
+    } else if (!mark && hasWinner) {
+      setMark(currentPlayer);
+      const updatedGameBoard: (Player | null)[] = [...gameBoard];
+      updatedGameBoard[id] = currentPlayer;
+      setGameBoard(updatedGameBoard);
+      setIsHovered(false)
+      setWinner(hasWinner)
+      console.log('clicked');
+    }
+    else {
       return null;
     }
   };

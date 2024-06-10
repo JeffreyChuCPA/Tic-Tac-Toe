@@ -19,6 +19,7 @@ const GameDataCard: React.FC<GameDataCardProps> = ({winner, allMarked}) => {
       setGameAmt(gameAmt + 1)
       setTieAmt(tieAmt + 1)
     }
+    // console.log('gamedata useEffect rendered');
   }, [winner, allMarked])
 
   return (

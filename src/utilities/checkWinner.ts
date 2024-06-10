@@ -13,18 +13,21 @@ const winningCombos: WinningCombos = {
 }
 
 export const checkWinner = (gameBoard: (Player | null)[], players: Player[], setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>): Player | null => {
+  console.log('check winner called');
   for (const section in winningCombos) {
     const winningConditions = winningCombos[section as keyof WinningCombos]
     for (const winningCondition of winningConditions) {
       if (winningCondition.every((value) => gameBoard[value] === players[0])) {
-        setCurrentPlayer(null)
+        // setCurrentPlayer(null)
+        console.log('player 1 win');
         return players[0]
-        
       } else if (winningCondition.every((value) => gameBoard[value] === players[1])) {
-        setCurrentPlayer(null)
+        // setCurrentPlayer(null)
+        console.log('player 2 win');
         return players[1]
       }
     }
   }
+  console.log('no winner');
   return null
 }
