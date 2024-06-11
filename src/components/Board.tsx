@@ -27,35 +27,9 @@ const winningCombos: WinningCombos = {
 }
 
 const Board: React.FC<BoardProps> = ({players, currentPlayer, board, winner, setBoard, setCurrentPlayer, setWinner, setAllMarked}) => {
-  // const [compMark, setCompMark] = useState<number | null>(null)
-
-  //if player is comp, determine the move for the comp and set the board
-  let currentCompMark: number | null = null 
-  if (currentPlayer?.playerType === 'Computer' && !winner) {
-    
-    const possibleCompMark: (number | null)[] = board.map((spot, index) => spot === null ? index : null).filter(spot => spot !== null)
-    const randomPossibleMark: number = Math.floor(Math.random() * possibleCompMark?.length)
-    currentCompMark = possibleCompMark[randomPossibleMark]
-    console.log(currentCompMark)
-  }
   
-  // useEffect(() => {
-  //   if (currentCompMark === compMark) {
-      
-  //     const newBoard = [...board]
-  //     if (compMark !== null) {
-  //       newBoard[compMark] = currentPlayer
-  //       setBoard(newBoard)
-  //       console.log('board is set by comp');
-  //       }
-  //     }
-
-  // }, [currentPlayer])
 
   useEffect(() => {
-    //after a computer mark is made, i need to update the board
-
-    
     //check if the board array has a winning player
     console.log('winner check');
     
@@ -66,12 +40,11 @@ const Board: React.FC<BoardProps> = ({players, currentPlayer, board, winner, set
           console.log('player 1 win');
           setWinner(players[0]);
           setCurrentPlayer(null);
-          break
+          break //*quick fix
         } else if (winningCondition.every((value) => board[value] === players[1])) {
           console.log('player 2 win');
           setWinner(players[1]);
           setCurrentPlayer(null);
-          
         }
       }
     }
@@ -86,7 +59,18 @@ const Board: React.FC<BoardProps> = ({players, currentPlayer, board, winner, set
     // switchPlayers(players, currentPlayer, setCurrentPlayer)
     console.log(board);
 
-  }, [board])
+  }, [currentPlayer, board, players, setAllMarked, setCurrentPlayer, setWinner])
+
+  //if player is comp, determine the move for the comp and set the board
+  let currentCompMark: number | null = null 
+  if (currentPlayer?.playerType === 'Computer' && !winner) {
+    
+    const possibleCompMark: (number | null)[] = board.map((spot, index) => spot === null ? index : null).filter(spot => spot !== null)
+    const randomPossibleMark: number = Math.floor(Math.random() * possibleCompMark?.length)
+    currentCompMark = possibleCompMark[randomPossibleMark]
+    console.log(currentCompMark)
+  }
+
   
 
   return (
