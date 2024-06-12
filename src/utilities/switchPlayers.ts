@@ -6,5 +6,4 @@ export const switchPlayers = (players: Player[], currentPlayer: Player | null, s
   } else {
     setCurrentPlayer(players[0]);
   }
-  console.log('player switched');
 }

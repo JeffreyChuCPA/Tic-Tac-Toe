@@ -33,7 +33,6 @@ function App() {
     } else {
       setCurrentPlayer(players[0]);
     }
-    console.log('player switched');
   }
 
   const resetGame = () => {
@@ -44,12 +43,10 @@ function App() {
     setBoard(newBoard)
   }
 
-  console.log(winner);
   
 
   return (
     <>
-    {console.log(currentPlayer)}
       {players[1].playerType === null 
         ? <SelectPlayers players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer}/> 
         : <div className='app'>

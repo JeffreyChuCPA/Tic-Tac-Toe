@@ -13,19 +13,15 @@ const winningCombos: WinningCombos = {
 }
 
 export const checkWinner = (board: (Player | null)[], players: Player[]): Player | null => {
-  console.log('check winner called');
   for (const section in winningCombos) {
     const winningConditions = winningCombos[section as keyof WinningCombos]
     for (const winningCondition of winningConditions) {
       if (winningCondition.every((value) => board[value] === players[0])) {
-        console.log('player 1 win');
         return players[0]
       } else if (winningCondition.every((value) => board[value] === players[1])) {
-        console.log('player 2 win');
         return players[1]
       }
     }
   }
-  console.log('no winner');
   return null
 }

@@ -11,10 +11,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ winner, allMarked, resetGame 
 
   const handlePlayAgain = (): void => {
     resetGame()
-    console.log('clicked played again');
   } 
-  console.log(winner);
-  
 
   return (
     <>
