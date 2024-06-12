@@ -13,9 +13,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({winner, selectedPlayer, currentP
 
   useEffect(() => {
     if (winner?.playerType === selectedPlayer?.playerType) {
-      setWinCount(winCount + 1)
+      setWinCount(prevWinCount => prevWinCount + 1)
     }
-  }, [winner]);
+  }, [selectedPlayer?.playerType, winner]);
 
   return (
     <div id={id} className={selectedPlayer === currentPlayer ? "player-card current" : "player-card"}>

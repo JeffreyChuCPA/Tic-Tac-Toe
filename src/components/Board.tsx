@@ -1,54 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MarkBox from './MarkBox'
 import { Player } from '../utilities/types';
+import { checkWinner } from '../utilities/checkWinner';
 
 type BoardProps = {
-  gameBoard: (Player | null)[],
-  setGameBoard: React.Dispatch<React.SetStateAction<(Player | null)[]>>,
-  winner: Player | null,
-  setWinner: React.Dispatch<React.SetStateAction<Player | null>>,
+  players: Player[],
   currentPlayer: Player | null,
-  setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>,
-  players: Player[]
+  winner: Player | null,
+  board: (Player | null)[]
+  gameIsTie: (tie: boolean) => void,
+  gameIsWon: (winningPlayer: Player | null) => void,
+  switchPlayers: () => void,
+  setBoard: React.Dispatch<React.SetStateAction<(Player | null)[]>>,
 }
 
-const Board: React.FC<BoardProps> = ({gameBoard, setGameBoard, winner, currentPlayer, setCurrentPlayer, players, setWinner}) => {
+const Board: React.FC<BoardProps> = ({players, currentPlayer, winner, board, gameIsTie, gameIsWon, switchPlayers, setBoard}) => {
+  const [currentCompMark, setCurrentCompMark] = useState<number | null>(null);
 
-  const handleComputerMark = (gameBoard: (Player | null)[]): number| null => {
-    console.log('handlecomputermark called')
-    console.log(winner)
-    if (winner) {
-      return null
+  useEffect(() => {
+
+    //* 1. If no reset needed => Check board for winner
+    if (checkWinner(board, players) && !winner) {
+      gameIsWon(checkWinner(board, players))
     }
-    const possibleMarkBox: (number | null)[] = gameBoard.map((spot, index) => spot === null ? index: null).filter(spot => spot !== null)
-    const randomMarkBox: number = Math.floor(Math.random() * possibleMarkBox?.length)
-    return possibleMarkBox[randomMarkBox]
-  }
 
-  let computerMark: number | null = null
+    //* 2. No winner => Check board if completely filled
+    if (board.every(spot => spot !== null)) {
+      gameIsTie(true)
+    }
 
-  if (currentPlayer?.playerType === 'Computer' && !winner) {
-    computerMark = handleComputerMark(gameBoard)
-  }
+    //* 3. Board not filled => determine the move for the comp if current player is comp
+    if (currentPlayer?.playerType === 'Computer' && !winner) {
+      
+      const possibleCompMark: (number | null)[] = board.map((spot, index) => spot === null ? index : null).filter(spot => spot !== null)
+      const randomPossibleMark: number = Math.floor(Math.random() * possibleCompMark?.length)
+      setCurrentCompMark(possibleCompMark[randomPossibleMark])
+    } else {
+      setCurrentCompMark(null)
+    }
+
+  }, [board, currentCompMark, currentPlayer?.playerType, gameIsTie, gameIsWon, players, switchPlayers, winner])
+
 
   return (
     <>
-    {console.log('board rendered')}
     <div className='board'>
       <div className='row' id='row1'>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={0}/>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={1}/>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={2}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={0}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={1}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={2}/>
       </div>
       <div className='row' id='row2'>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={3}/>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={4}/>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={5}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={3}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={4}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={5}/>
       </div>
       <div className='row' id='row3'>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={6}/>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={7}/>
-        <MarkBox setWinner={setWinner} computerMark={computerMark} players={players} winner={winner} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} gameBoard={gameBoard} setGameBoard={setGameBoard} id={8}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={6}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={7}/>
+        <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={8}/>
       </div>
     </div>
     </>

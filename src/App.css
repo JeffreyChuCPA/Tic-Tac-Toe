@@ -28,52 +28,7 @@
   background-position: center;
   box-sizing: border-box;
   color: white;
-  /* animation: gradientAnimation 2s infinite ease-in-out; */
   background-size: 100% 100%
-}
-
-@keyframes gradientAnimation {
-  0%, 100% {
-    --deg1-start: 217deg;
-    --deg2-start: 127deg;
-    --deg3-start: 336deg;
-  }
-  1.111% {
-    --deg1-start: calc(217deg + (360deg * 1.111));
-    --deg2-start: calc(127deg + (360deg * 1.111));
-    --deg3-start: calc(336deg + (360deg * 1.111));
-  }
-  2.222% {
-    --deg1-start: calc(217deg + (360deg * 2.222));
-    --deg2-start: calc(127deg + (360deg * 2.222));
-    --deg3-start: calc(336deg + (360deg * 2.222));
-  }
-  /* Continue with increments up to 100% */
-  /* 90% */
-  90% {
-    --deg1-start: calc(217deg + (360deg * 90));
-    --deg2-start: calc(127deg + (360deg * 90));
-    --deg3-start: calc(336deg + (360deg * 90));
-  }
-  /* 91.111% */
-  91.111% {
-    --deg1-start: calc(217deg + (360deg * 91.111));
-    --deg2-start: calc(127deg + (360deg * 91.111));
-    --deg3-start: calc(336deg + (360deg * 91.111));
-  }
-  /* 92.222% */
-  92.222% {
-    --deg1-start: calc(217deg + (360deg * 92.222));
-    --deg2-start: calc(127deg + (360deg * 92.222));
-    --deg3-start: calc(336deg + (360deg * 92.222));
-  }
-  /* Continue with increments up to 100% */
-  /* 100% */
-  100% {
-    --deg1-start: 217deg;
-    --deg2-start: 127deg;
-    --deg3-start: 336deg;
-  }
 }
 
 html,
@@ -97,7 +52,7 @@ body {
   border: 10px solid white;
   border-radius: 20%;
   aspect-ratio: 1/1;
-  width: 40%;
+  width: 35%;
   max-width: 830px;
   min-width: 304px;
   display: flex;
@@ -243,7 +198,7 @@ body {
   transform: translate(-50%, -50%);
   border: 10px solid white;
   border-radius: 20%;
-  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  font-size: clamp(1.1rem, 1.5vw, 2.2rem);
 }
 
 .player-selection-btn {
@@ -267,7 +222,7 @@ body {
 .results-card {
   width: clamp(200px, 30%, 400px);
   aspect-ratio: 1/1;
-  /* position: fixed; */
+  position: fixed;
   z-index: 5;
   display: flex;
   justify-content: center;
@@ -276,7 +231,7 @@ body {
   gap: 10px;
   border: 10px solid white;
   border-radius: 20%;
-  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  font-size: clamp(1.1rem, 1.5vw, 2.2rem);
   background-image: linear-gradient(
     var(--deg1-start),
     rgba(247, 98, 121, 0.8),
@@ -328,7 +283,7 @@ body {
   flex-direction: column;
   margin: 50px;
   padding: 20px;
-  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  font-size: clamp(1.1rem, 1.5vw, 2.2rem);
   transition: 0.5s ease-in;
 }
 
@@ -363,7 +318,7 @@ body {
   border: 10px solid white;
   border-radius: 20%;
   padding: 20px;
-  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  font-size: clamp(1.1rem, 1.5vw, 2.2rem);
   width: clamp(100px, 10%, 200px);
   min-width: 100px;
   aspect-ratio: 1/1;
@@ -400,7 +355,7 @@ body {
 @media screen and (max-width: 829px) {
   .app {
     display: grid;
-    grid-template-rows: 60% 20%;
+    grid-template-rows: 70% 30%;
     gap: 10px;
     grid-template-areas: 
       "board board board"
@@ -435,7 +390,7 @@ body {
 
 @media screen and (max-width: 685px) {
   .app {
-    grid-template-rows: 60% 20% 20%;
+    grid-template-rows: 70% 10% 20%;
     grid-template-areas: 
       "board board board"
       "player1 . player2"
@@ -461,20 +416,23 @@ body {
     grid-area: data;
     justify-self: center;
     width: 75%;
-    height: 20%;
+    height: 30%;
     border-radius: 30px;
+  }
+  .player-card {
+    width: clamp(60px, 10%, 100px);
+    min-width: 60px;
   }
 }
 
 @media screen and (max-width: 505px) {
   .app {
-    grid-template-rows: 40% 16% 16% 20%;
-    grid-template-columns: 100%;
+    grid-template-rows: 50% 25% 25%;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas: 
-      "board"
-      "player1"
-      "player2"
-      "data";
+      "board board"
+      "player1 player2"
+      "data data";
   }
   [id='0'].player-card {
     grid-area: player1;
@@ -484,5 +442,10 @@ body {
   [id='1'].player-card {
     grid-area: player2;
     justify-self: center;
+  }
+
+  .player-card {
+    width: clamp(60px, 10%, 100px);
+    min-width: 60px;
   }
 }

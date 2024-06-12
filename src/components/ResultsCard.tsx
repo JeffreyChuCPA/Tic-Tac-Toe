@@ -1,26 +1,16 @@
 import React from "react";
 import { Player } from "../utilities/types";
-import { determineFirstTurn } from "../utilities/determineFirstTurn";
 
 type ResultsCardProps = {
-  winner: Player | null ,
-  setWinner: React.Dispatch<React.SetStateAction<Player | null >>,
+  winner: Player | null,
   allMarked: boolean,
-  setAllMarked: (value: React.SetStateAction<boolean>) => void,
-  setGameBoard: React.Dispatch<React.SetStateAction<(Player | null)[]>>,
-  players: Player[],
-  setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>
+  resetGame: () => void
 };
 
-const ResultsCard: React.FC<ResultsCardProps> = ({ winner, setWinner, allMarked, setAllMarked, setGameBoard, players, setCurrentPlayer }) => {
+const ResultsCard: React.FC<ResultsCardProps> = ({ winner, allMarked, resetGame }) => {
 
   const handlePlayAgain = (): void => {
-    setWinner(null);
-    setAllMarked(false)
-    const newBoard: (Player | null)[] = Array(9).fill(null)
-    setGameBoard(newBoard)
-    determineFirstTurn(2, players, setCurrentPlayer)
-    console.log('clicked played again');
+    resetGame()
   } 
 
   return (
