@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Player } from "../utilities/types";
 import cross from "../assets/cross.png";
 import circle from "../assets/circle.png";
-import { switchPlayers } from "../utilities/switchPlayers";
 
 type MarkBoxProps = {
   id: number;
@@ -12,7 +11,7 @@ type MarkBoxProps = {
   winner: Player | null,
   currentCompMark:  number | null,
   setBoard: React.Dispatch<React.SetStateAction<(Player | null)[]>>,
-  setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>,
+  switchPlayers: () => void
 };
 
 const MarkBox: React.FC<MarkBoxProps> = ({
@@ -22,8 +21,8 @@ const MarkBox: React.FC<MarkBoxProps> = ({
   board,
   winner,
   currentCompMark,
+  switchPlayers,
   setBoard,
-  setCurrentPlayer
 }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -34,11 +33,11 @@ const MarkBox: React.FC<MarkBoxProps> = ({
       if (currentCompMark !== null) {
         newBoard[currentCompMark] = currentPlayer
         setBoard(newBoard)
-        switchPlayers(players, currentPlayer, setCurrentPlayer)
+        switchPlayers()
       }
     }
 
-  }, [currentPlayer])
+  }, [board, currentCompMark, currentPlayer, id, setBoard, switchPlayers])
 
   const handlePlayerMark = () => {
     if (!board[id] && !winner) {
@@ -46,7 +45,7 @@ const MarkBox: React.FC<MarkBoxProps> = ({
       newBoard[id] = currentPlayer
       setBoard(newBoard)
       setIsHovered(false)
-      switchPlayers(players, currentPlayer, setCurrentPlayer)
+      switchPlayers()
     }
   };
 

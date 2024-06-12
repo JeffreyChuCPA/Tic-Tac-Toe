@@ -13,14 +13,14 @@ const GameDataCard: React.FC<GameDataCardProps> = ({winner, allMarked}) => {
 
   useEffect(() => {
     if (winner) {
-      setGameAmt(gameAmt + 1)
-      setWinAmt(winAmt + 1)
+      setGameAmt(prev => prev + 1)
+      setWinAmt(prev => prev + 1)
     } else if (allMarked && winner === null) {
-      setGameAmt(gameAmt + 1)
-      setTieAmt(tieAmt + 1)
+      setGameAmt(prev => prev + 1)
+      setTieAmt(prev => prev + 1)
     }
     // console.log('gamedata useEffect rendered');
-  }, [winner, allMarked])
+  }, [allMarked, winner])
 
   return (
     <div className='game-data-card'>

@@ -6,6 +6,7 @@ import PlayerCard from './components/PlayerCard'
 import { Player } from './utilities/types'
 import SelectPlayers from './components/SelectPlayers'
 import GameDataCard from './components/GameDataCard'
+import { determineFirstTurn } from './utilities/determineFirstTurn'
 
 
 function App() {
@@ -15,6 +16,36 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null)
   const [board, setBoard] = useState<(Player | null)[]>(Array(9).fill(null))
 
+  //move all game and event logic here
+  const gameIsTie = (tie: boolean): void => {
+    setAllMarked(tie)
+    setCurrentPlayer(null)
+  }
+
+  const gameIsWon = (winningPlayer: Player | null): void => {
+    setWinner(winningPlayer)
+    setCurrentPlayer(null)
+  }
+
+  const switchPlayers = () => {
+    if (currentPlayer === players[0]) {
+      setCurrentPlayer(players[1]);
+    } else {
+      setCurrentPlayer(players[0]);
+    }
+    console.log('player switched');
+  }
+
+  const resetGame = () => {
+    setWinner(null)
+    setAllMarked(false)
+    determineFirstTurn(2, players, setCurrentPlayer)
+    const newBoard: (Player | null)[] = Array(9).fill(null)
+    setBoard(newBoard)
+  }
+
+  console.log(winner);
+  
 
   return (
     <>
@@ -22,11 +53,11 @@ function App() {
       {players[1].playerType === null 
         ? <SelectPlayers players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer}/> 
         : <div className='app'>
-            <PlayerCard id={'0'} winner={winner} selectedPlayer={players[0]} currentPlayer={currentPlayer}/>
-            <Board players={players} currentPlayer={currentPlayer} board={board} winner={winner} setBoard={setBoard} setCurrentPlayer={setCurrentPlayer} setWinner={setWinner} setAllMarked={setAllMarked}/>
-            <PlayerCard id={'1'} winner={winner} selectedPlayer={players[1]} currentPlayer={currentPlayer}/>
-            <ResultsCard players={players} setCurrentPlayer={setCurrentPlayer} winner={winner} setWinner={setWinner} allMarked={allMarked} setAllMarked={setAllMarked} setBoard={setBoard} />
-            <GameDataCard winner={winner} allMarked={allMarked} />
+          <PlayerCard id={'0'} winner={winner} selectedPlayer={players[0]} currentPlayer={currentPlayer}/>
+          <Board board={board} players={players} currentPlayer={currentPlayer} winner={winner} setBoard={setBoard} gameIsTie={gameIsTie} gameIsWon={gameIsWon} switchPlayers={switchPlayers}/>
+          <PlayerCard id={'1'} winner={winner} selectedPlayer={players[1]} currentPlayer={currentPlayer}/>
+          <ResultsCard  winner={winner} allMarked={allMarked} resetGame={resetGame} />
+          <GameDataCard winner={winner} allMarked={allMarked} />
           </div>}
     </>
   )
