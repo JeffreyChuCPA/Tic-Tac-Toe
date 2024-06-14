@@ -40,7 +40,7 @@ const MarkBox: React.FC<MarkBoxProps> = ({
   }, [board, currentCompMark, currentPlayer, id, setBoard, switchPlayers])
 
   const handlePlayerMark = () => {
-    if (!board[id] && !winner) {
+    if (!board[id] && !winner && currentPlayer?.playerType !== 'Computer') {
       const newBoard = [...board]
       newBoard[id] = currentPlayer
       setBoard(newBoard)
