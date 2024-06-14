@@ -19,24 +19,41 @@ const Board: React.FC<BoardProps> = ({players, currentPlayer, winner, board, gam
 
   useEffect(() => {
 
-    //* 1. If no reset needed => Check board for winner
+    //* 1. Check board for winner
     if (checkWinner(board, players) && !winner) {
       gameIsWon(checkWinner(board, players))
     }
+    console.log('no winner');
+    
 
     //* 2. No winner => Check board if completely filled
     if (board.every(spot => spot !== null)) {
       gameIsTie(true)
     }
+    console.log('no tie');
+    
 
     //* 3. Board not filled => determine the move for the comp if current player is comp
     if (currentPlayer?.playerType === 'Computer' && !winner) {
       
-      const possibleCompMark: (number | null)[] = board.map((spot, index) => spot === null ? index : null).filter(spot => spot !== null)
-      const randomPossibleMark: number = Math.floor(Math.random() * possibleCompMark?.length)
-      setCurrentCompMark(possibleCompMark[randomPossibleMark])
+      const generateCompMark = () => {
+        const possibleCompMark: (number | null)[] = board.map((spot, index) => spot === null ? index : null).filter(spot => spot !== null)
+        const randomPossibleMark: number = Math.floor(Math.random() * possibleCompMark?.length)
+        console.log(possibleCompMark[randomPossibleMark]);
+        setTimeout(() => setCurrentCompMark(possibleCompMark[randomPossibleMark]), 2000)
+      }
+      generateCompMark()
+
+      // const delayCompMark = setTimeout(() => {
+      //   generateCompMark()
+      //   console.log('delay ran')
+      //   console.log(currentCompMark);
+        
+      // }, 2000);
+
+
     } else {
-      setCurrentCompMark(null)
+      setTimeout(() => setCurrentCompMark(null),2000)
     }
 
   }, [board, currentCompMark, currentPlayer?.playerType, gameIsTie, gameIsWon, players, switchPlayers, winner])
@@ -44,6 +61,7 @@ const Board: React.FC<BoardProps> = ({players, currentPlayer, winner, board, gam
 
   return (
     <>
+    {console.log(board)}
     <div className='board'>
       <div className='row' id='row1'>
         <MarkBox currentCompMark={currentCompMark} players={players} board={board} winner={winner} currentPlayer={currentPlayer} setBoard={setBoard} switchPlayers={switchPlayers} id={0}/>
