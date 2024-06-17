@@ -65,7 +65,7 @@ body {
 
 .row {
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   align-items: center;
   height: 300px;
   width: 100%;
